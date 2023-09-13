@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Log In</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  class="auth-form">
+
+  <form>
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="text" [(ngModel)]="user.email" name="email" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit"  (click)="login()" color="success" expand="block">Sign In</ion-button>
+        <a [routerLink]="['/forgot-password']" class="small-text">Forgot Password?</a>
+      </ion-col>
+    </ion-row>
+  </form>
+
+
+    <ion-row>
+      <ion-col align-self-center>
+        <span class="already">New user?</span>
+
+        <ion-button [routerLink]="['/registration']" expand="block" color="primary">Register</ion-button>
+
+      </ion-col>
+    </ion-row>
+
+
+</ion-content>
+
+

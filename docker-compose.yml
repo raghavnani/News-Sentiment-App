@@ -1,0 +1,71 @@
+version: "3.6"
+
+services:
+  database:
+    image: postgres:12.3
+    container_name: postgres
+#    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=dashboard
+    ports:
+      - 5432
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  dashboard:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+#    command: sh -c "/wait && python run.py"  # wait for db, then run
+    container_name: flask_dashboard
+    ports:
+      - 5001:5001
+#    restart: always
+    environment:
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_CONNECTION=postgres
+      - POSTGRES_DATABASE=dashboard
+      - WAIT_HOSTS=postgres:5432  # docker-compose-wait settings
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+    depends_on:
+      - database
+    volumes:
+      - ./backend/app:/src/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - 3000
+
+  nginx:
+    image: webapp-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile-nginx
+    container_name: nginx
+    ports:
+      - 80:80
+      - 443:443
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    depends_on:
+      - dashboard
+      - frontend
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+

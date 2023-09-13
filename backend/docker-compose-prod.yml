@@ -1,0 +1,45 @@
+version: "3.6"
+services:
+  database:
+    container_name: postgres
+    image: postgres:12.3
+    ports:
+      - 5433:5433
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=dashboard
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sh -c "/wait && gunicorn --bind 0.0.0.0:5001 run:app"  # wait for db, then run
+    container_name: dashboard
+    ports:
+      - 5001
+    environment:
+      - POSTGRES_PORT=5433
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_CONNECTION=POSTGRES
+      - WAIT_HOSTS=postgres:5433  # docker-compose-wait settings
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+    depends_on:
+      - database
+#    volumes:
+#      - ./app:/src/app
+
+  nginx:
+    image: webapp-nginx
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    ports:
+      - 8080:80
+    depends_on:
+      - dashboard

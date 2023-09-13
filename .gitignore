@@ -1,0 +1,56 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+data/
+# Environments
+backend/.venv
+backend/env/
+backend/venv/
+backend/ENV/
+backend/env.bak/
+backend/venv.bak/
+
+# IDE
+backend/.vscode/
+backend/.idea/
+
+#model weights
+#backend/app/nlp/model_weights/
+
+postgres-data/
+
+
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+.idea/
+
+
+frontend/*~
+frontend/*.sw[mnpcod]
+frontend/.tmp
+frontend/*.tmp
+frontend/*.tmp.*
+frontend/*.sublime-project
+frontend/*.sublime-workspace
+frontend/.DS_Store
+frontend/Thumbs.db
+frontend/UserInterfaceState.xcuserstate
+frontend/$RECYCLE.BIN/
+
+frontend/*.log
+frontend/log.txt
+frontend/npm-debug.log*
+
+frontend/.idea/
+frontend/.ionic/
+frontend/.sass-cache/
+frontend/.sourcemaps/
+frontend/.versions/
+frontend/.vscode/
+frontend/coverage/
+frontend/dist/
+frontend/node_modules/
+frontend/platforms/
+frontend/plugins/

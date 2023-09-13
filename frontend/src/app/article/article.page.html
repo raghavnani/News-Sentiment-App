@@ -1,0 +1,47 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="radio-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="share-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf='article'>
+  <div class="container-view">
+    <div class="card-thumbnail" [style.backgroundImage]="'url(article.get_image_url())'"></div>
+
+    <div class="article-header ion-padding">
+      <div class="article-title">
+        {{article.get_title()}}
+      </div>
+      <div class="article-author">
+        {{article.get_source()}}
+      </div>
+      <div class="article-timestamp">
+          {{article.get_published_at()}}
+      </div>
+      <div class="header-divider"></div>
+    </div>
+
+    <div class="article-body ion-padding">
+      <p>
+        
+        {{article.get_text()}}
+
+        <ion-icon name="square" size="small" color="primary"></ion-icon></p>
+    </div>
+
+  </div>
+</ion-content>

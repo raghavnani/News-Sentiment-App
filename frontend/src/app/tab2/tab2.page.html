@@ -1,0 +1,36 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="radio-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Search
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="medium" class="toolbar-search">
+    <ion-searchbar color="white" placeholder="Search article"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding result-header">
+    <div class="result-count">
+      7713 results
+    </div>
+    <ion-segment value="all">
+      <ion-segment-button value="all">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button>
+        <ion-label>Positive</ion-label>
+      </ion-segment-button>
+      <ion-segment-button>
+        <ion-label>Negative</ion-label>
+      </ion-segment-button>
+
+    </ion-segment>
+  </div>
+
+</ion-content>

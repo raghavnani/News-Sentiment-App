@@ -1,0 +1,73 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="radio-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Saved Stories
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="securityObject.isAuthenticated">
+
+  <div *ngIf="news">
+
+
+  <div class="container-view" *ngFor= 'let article of news'>
+
+    <ion-card class="card-custom"  routerLink="/tabs/tab1/article">
+      
+      <ion-card-header>
+        <ion-card-subtitle>  {{article.get_sentiment()}}
+        </ion-card-subtitle>
+        <ion-card-title>  {{article.get_title()}}      </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <strong>Positive</strong> : {{article.get_logits()[0].toFixed(2)}}
+        <strong>Negative</strong> : {{article.get_logits()[1].toFixed(2)}}
+        <strong>Neutral</strong> : {{article.get_logits()[2].toFixed(2)}}
+
+      </ion-card-content>
+
+      <ion-row>
+        <ion-col class="ion-padding">
+          {{article.get_published_at()}} 
+        </ion-col>
+        <ion-col size="auto">
+          <ion-button fill="clear" size="small" color="medium">
+            <ion-icon slot="icon-only" name="share-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" size="small" color="medium">
+            <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+
+  </div>
+  </div>
+</div>
+
+<div>
+  <ion-grid>
+
+  <ion-card-header class="ion-padding">
+    <ion-card-title>  Please Login to View Saved News   </ion-card-title>
+  </ion-card-header>
+
+
+  <ion-button [routerLink]="['/login']" expand="block" color="success">Sign In</ion-button>
+</ion-grid>
+
+
+</div>
+
+
+
+</ion-content>
